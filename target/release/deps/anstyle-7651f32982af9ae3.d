@@ -1,0 +1,12 @@
+/home/rotted/Scripts/sync/target/release/deps/libanstyle-7651f32982af9ae3.rmeta: /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/lib.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/macros.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/color.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/effect.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/reset.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/style.rs
+
+/home/rotted/Scripts/sync/target/release/deps/libanstyle-7651f32982af9ae3.rlib: /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/lib.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/macros.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/color.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/effect.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/reset.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/style.rs
+
+/home/rotted/Scripts/sync/target/release/deps/anstyle-7651f32982af9ae3.d: /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/lib.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/macros.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/color.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/effect.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/reset.rs /home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/style.rs
+
+/home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/lib.rs:
+/home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/macros.rs:
+/home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/color.rs:
+/home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/effect.rs:
+/home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/reset.rs:
+/home/rotted/.cargo/registry/src/index.crates.io-6f17d22bba15001f/anstyle-1.0.10/src/style.rs:
