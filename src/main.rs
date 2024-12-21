@@ -44,13 +44,7 @@ fn run_nix_collect_garbage() -> io::Result<ExitStatus> {
 }
 
 fn pull_main_branch(repo_path: &str) -> io::Result<ExitStatus> {
-    let pb = ProgressBar::new_spinner();
-    pb.set_style(
-        ProgressStyle::default_spinner()
-            .template("{spinner:.white} {msg}")
-            .expect("Invalid template"),
-    );
-    pb.set_message("✓ Pulling main branch...");
+    println!(" ✓ Pulling main branch...");
 
     let status = Command::new("git")
         .arg("-C") // Specify the directory
@@ -60,8 +54,7 @@ fn pull_main_branch(repo_path: &str) -> io::Result<ExitStatus> {
         .arg("main")
         .status()?;
 
-    pb.enable_steady_tick(Duration::from_millis(100));
-    pb.finish_with_message("✓ Pull operation completed.");
+    println!(" ✓ 'git pull' completed.");
     Ok(status)
 }
 
@@ -122,15 +115,13 @@ fn run_home_manager_switch(flake_path: &str, profile: &str) -> io::Result<ExitSt
         .arg("switch")
         .arg("--flake")
         .arg(&full_flake)
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
         .status()?;
 
     pb.finish_with_message("✓ home-manager switch completed.");
     Ok(status)
 }
 
-fn git_diff(repo_path: &str) -> io::Result<String> {
+fn git_show(repo_path: &str) -> io::Result<String> {
     let pb = ProgressBar::new_spinner();
     pb.set_style(
         ProgressStyle::default_spinner()
@@ -138,12 +129,12 @@ fn git_diff(repo_path: &str) -> io::Result<String> {
             .expect("Invalid template"),
     );
     pb.enable_steady_tick(Duration::from_millis(100));
-    pb.set_message("✓ Running git diff...");
+    pb.set_message("✓ Running git show...");
 
     let output = Command::new("git")
         .arg("-C")
         .arg(repo_path)
-        .arg("diff")
+        .arg("show")
         .output()?;
 
     pb.finish_with_message("✓ git diff completed.");
@@ -185,6 +176,11 @@ fn git_commit_with_time(repo_path: &str) -> io::Result<ExitStatus> {
         .status()?;
 
     pb.finish_with_message("✓ Commit operation completed.");
+    Ok(status)
+}
+
+fn clear_screen() -> io::Result<ExitStatus> {
+    let status = Command::new("clear").status()?;
     Ok(status)
 }
 
@@ -237,43 +233,50 @@ fn main() {
         }
     }
 
+    if let Err(e) = clear_screen() {
+        eprintln!("  ✗ Error clearing clear: {}", e);
+    }
+
+    if let Err(e) = git_add_all(repo_path) {
+        eprintln!("  ✗ Error during staging operation: {}", e);
+    }
+
     if let Err(e) = run_nixos_rebuild(repo_path, nixos_profile) {
-        eprintln!("✗ Error during nixos-rebuild operation: {}", e);
+        eprintln!("  ✗ Error during nixos-rebuild operation: {}", e);
     }
 
     if let Err(e) = run_home_manager_switch(repo_path, home_manager_profile) {
-        eprintln!("✗ Error during home-manager operation: {}", e);
+        eprintln!("  ✗ Error during home-manager operation: {}", e);
     }
 
     // Skip Git operations if --skip-git is set
     if !args.skip_git {
         if let Err(e) = pull_main_branch(repo_path) {
-            eprintln!("✗ Error during pull operation: {}", e);
+            eprintln!("  ✗ Error during pull operation: {}", e);
         }
 
         if let Err(e) = git_add_all(repo_path) {
-            eprintln!("✗ Error during staging operation: {}", e);
+            eprintln!("  ✗ Error during staging operation: {}", e);
         }
-
 
         if let Err(e) = git_commit_with_time(repo_path) {
-            eprintln!("✗ Error during commit operation: {}", e);
+            eprintln!("  ✗ Error during commit operation: {}", e);
         }
-        match git_diff(repo_path) {
-            Ok(diff) => {
-                if diff.is_empty() {
+        match git_show(repo_path) {
+            Ok(show) => {
+                if show.is_empty() {
                     println!("No differences found.");
                 } else {
-                    println!("{}", diff);
+                    println!("{}", show);
                 }
             }
-            Err(e) => eprintln!("✗ Error executing git diff: {}", e),
+            Err(e) => eprintln!("  ✗ Error executing git show: {}", e),
         }
 
         if let Err(e) = git_push(repo_path) {
-            eprintln!("✗ Error during push operation: {}", e);
+            eprintln!("  ✗ Error during push operation: {}", e);
         }
     } else {
-        println!("Skipping Git operations as per the '--skip-git' flag.");
+        println!(" Skipping Git operations as per the '--skip-git' flag.");
     }
 }
