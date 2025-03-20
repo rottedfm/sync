@@ -160,8 +160,6 @@ fn git_push() -> io::Result<()> {
         eprintln!("Error: Failed to push changes to git.");
         Err(io::Error::new(io::ErrorKind::Other, "Git push failed"))
     }
-
-    
 }
 
 fn chown_lock() -> io::Result<()> {
@@ -181,7 +179,6 @@ fn chown_lock() -> io::Result<()> {
         eprintln!("Error: Failed to chown flake.lock");
         Err(io::Error::new(io::ErrorKind::Other, "Failed to chown"))
     }
-    
 }
 
 fn main() {
@@ -213,29 +210,7 @@ fn main() {
         if let Err(e) = rebuild_homemanager() {
             eprintln!("Error rebuilding HomeManager: {}", e);
         }
-    } else {
-        if let Err(e) = git_add() {
-            eprintln!("Error adding .nix directory to git: {}", e);
-        }
-
-        if let Err(e) = rebuild_nixos() {
-            eprintln!("Error rebuilding NixOS: {}", e);
-        }
-
-        if let Err(e) = rebuild_homemanager() {
-            eprintln!("Error rebuilding HomeManager: {}", e);
-        }
-
-        if let Err(e) = git_commit() {
-            eprintln!("Error commiting changes to git: {}", e);
-        }
-
-        if let Err(e) = git_push() {
-            eprintln!("Error pushing changes to git: {}", e);
-        }
-    }
-
-    if cli.first_sync {
+    } else if cli.first_sync {
         if let Err(e) = rebuild_nixos() {
             eprintln!("Error rebuilding NixOS: {}", e);
         }
@@ -258,6 +233,21 @@ fn main() {
         if let Err(e) = rebuild_homemanager() {
             eprintln!("Error rebuilding HomeManager: {}", e);
         }
-
+    } else {
+        if let Err(e) = git_add() {
+            eprintln!("Error adding files to git: {}", e);
+        }
+        if let Err(e) = rebuild_nixos() {
+            eprintln!("Error rebuilding NixOS: {}", e);
+        }
+        if let Err(e) = rebuild_homemanager() {
+            eprintln!("Error rebuilding HomeManager: {}", e);
+        }
+        if let Err(e) = git_commit() {
+            eprintln!("Error commiting repository to git: {}", e);
+        }
+        if let Err(e) = git_push() {
+            eprintln!("Error pushing repository to git: {}", e);
+        }
     }
 }
