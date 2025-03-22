@@ -98,7 +98,11 @@ fn git_add() -> io::Result<()> {
         style("Info").green(),
         nix_dir
     );
-    let status = Command::new("git").arg("add").arg(&nix_dir).status()?;
+    let status = Command::new("git")
+        .arg("add")
+        .arg(".")
+        .current_dir(&nix_dir)
+        .status()?;
 
     if status.success() {
         println!(
@@ -164,9 +168,10 @@ fn git_push() -> io::Result<()> {
 
 fn chown_lock() -> io::Result<()> {
     let home_dir = env::var("HOME").expect("Failed to get HOME directory");
-    let lock = format!("{}/.nix/flake.lock", home_dir);
+    let nix_dir = format!("{}/.nix", home_dir);
     let status = Command::new("sudo")
-        .args(["chown", "rotted", &lock])
+        .args(["chown", "rotted", "flake.lock"])
+        .current_dir(nix_dir)
         .status()?;
 
     if status.success() {
